@@ -19,7 +19,7 @@ import com.ds.tree.util.TestUtils;
 @TestInstance(Lifecycle.PER_CLASS)
 public class TreeHeightServiceTest {
 	
-private TestUtils testUtils;
+    private TestUtils testUtils;
 	
 	private BTNode root1;
 	

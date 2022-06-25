@@ -43,5 +43,18 @@ public class TestUtils {
 		root.setRight(right1);
 		return root;
 	}
+	
+	public BTNode createChildSumTree() {
+		BTNode root = new BTNode(10);
+		BTNode left1 = new BTNode(2);
+		BTNode right1 = new BTNode(8);
+		BTNode left2 = new BTNode(6);
+		BTNode right2 = new BTNode(2);
+		right1.setLeft(left2);
+		right1.setRight(right2);
+		root.setLeft(left1);
+		root.setRight(right1);
+		return root;
+	}
 
 }

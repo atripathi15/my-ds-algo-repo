@@ -109,6 +109,31 @@ public class TreeTraversalSevice {
 		}
 		return traversalString.toString();
 	}
+	
+	/**
+	 * Find left nodes at each level
+	 * Runtime Complexity O(n) : Space Complexity O(h) 
+	*/
+	public String printLeftViewIterative(BTNode root) {
+		if (root == null)
+			return "";
+		LinkedList<BTNode> queue = new LinkedList<>();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			int count = queue.size();
+			for (int i = 0; i < count; i++) {
+				BTNode current = queue.poll();
+				if (i == 0) {
+					traversalString.append(current.getKey()).append(" ");
+				}
+				if (current.getLeft() != null)
+					queue.add(current.getLeft());
+				if (current.getRight() != null)
+					queue.add(current.getRight());
+			}
+		}
+		return traversalString.toString();
+	}
     
     public void resetTraverstalString() {
     	traversalString = new StringBuilder();

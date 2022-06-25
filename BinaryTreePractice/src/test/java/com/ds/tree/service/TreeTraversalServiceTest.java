@@ -116,14 +116,30 @@ public class TreeTraversalServiceTest {
 	public void printDestTest() {
 		String result1 = treeTraversalSevice.printDist(root1,1);
 		assertThat(result1).isNotNull();
-		System.out.println(result1);
+		System.out.println("Nodes at distance 1: "+result1);
 		assertThat(result1.trim()).isEqualTo("20 30");
 
 		treeTraversalSevice.resetTraverstalString();
 		String result2 = treeTraversalSevice.printDist(root2,2);
 		assertThat(result2).isNotNull();
-		System.out.println(result2);
+		System.out.println("Nodes at distance 2: "+ result2);
 		assertThat(result2.trim()).isEqualTo("40 50 60");
+	}
+	
+	@Test
+	public void printLeftViewIterativeTest() {
+		String result1 = treeTraversalSevice.printLeftViewIterative(root1);
+		assertThat(result1).isNotNull();
+		System.out.println("leftview:"+result1);
+		assertThat(result1.trim()).isEqualTo("10 20 40");
+
+		treeTraversalSevice.resetTraverstalString();
+		String result2 = treeTraversalSevice.printLeftViewIterative(root2);
+		assertThat(result2).isNotNull();
+		System.out.println("leftview:"+result2);
+		assertThat(result2.trim()).isEqualTo("10 20 40 70");
+	
+		
 	}
 
 }
