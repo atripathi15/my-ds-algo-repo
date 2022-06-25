@@ -96,5 +96,34 @@ public class TreeTraversalServiceTest {
 		assertThat(postOrder2.trim()).isEqualTo("10 20 30 40 50 60 70 80");
 
 	}
+	
+	@Test
+	public void levelOrderTraversalLineByLine() {
+		String levelOrderLineByLine1 = treeTraversalSevice.levelOrderTraversalLineByLine(root1);
+		assertThat(levelOrderLineByLine1).isNotNull();
+		System.out.println(levelOrderLineByLine1);
+		assertThat(levelOrderLineByLine1.trim()).isEqualTo("10 \n20 30 \n40 50");
+
+		treeTraversalSevice.resetTraverstalString();
+		String levelOrderLineByLine2 = treeTraversalSevice.levelOrderTraversalLineByLine(root2);
+		assertThat(levelOrderLineByLine2).isNotNull();
+		System.out.println(levelOrderLineByLine2);
+		assertThat(levelOrderLineByLine2.trim()).isEqualTo("10 \n20 30 \n40 50 60 \n70 80");
+
+	}
+	
+	@Test
+	public void printDestTest() {
+		String result1 = treeTraversalSevice.printDist(root1,1);
+		assertThat(result1).isNotNull();
+		System.out.println(result1);
+		assertThat(result1.trim()).isEqualTo("20 30");
+
+		treeTraversalSevice.resetTraverstalString();
+		String result2 = treeTraversalSevice.printDist(root2,2);
+		assertThat(result2).isNotNull();
+		System.out.println(result2);
+		assertThat(result2.trim()).isEqualTo("40 50 60");
+	}
 
 }

@@ -68,6 +68,47 @@ public class TreeTraversalSevice {
 		}
 		return traversalString.toString();
 	}
+	
+	/**
+	 * Runtime Complexity O(n) : Space Complexity O(n) or more precisely theta(w) 
+	 * where w is width of tree
+	*/
+	public String levelOrderTraversalLineByLine(BTNode root) {
+		LinkedList<BTNode> queue = new LinkedList<>();
+		if (root == null) {
+			return "";
+		}
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			int count = queue.size();
+			for (int i = 0; i < count; i++) {
+				BTNode current = queue.poll();
+				traversalString.append(current.getKey()).append(" ");
+				if (current.getLeft() != null)
+					queue.add(current.getLeft());
+				if (current.getRight() != null)
+					queue.add(current.getRight());
+			}
+			traversalString.append("\n");
+		}
+		return traversalString.toString();
+	}
+	
+	/**
+	 * Runtime Complexity O(n) : Space Complexity O(h) 
+	*/
+	public String printDist(BTNode root, int k) {
+
+		if (root == null)
+			return "";
+		if (k == 0)
+			return traversalString.append(root.getKey()).append(" ").toString();
+		else {
+			printDist(root.getLeft(), k - 1);
+			printDist(root.getRight(), k - 1);
+		}
+		return traversalString.toString();
+	}
     
     public void resetTraverstalString() {
     	traversalString = new StringBuilder();
