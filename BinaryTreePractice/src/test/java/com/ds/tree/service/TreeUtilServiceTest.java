@@ -27,6 +27,8 @@ public class TreeUtilServiceTest {
 	
 	private BTNode root3;
 	
+	private BTNode root4;
+	
 	private BTNode emptyTree;
 	
 	private BTNode oneNodeTree;
@@ -40,6 +42,7 @@ public class TreeUtilServiceTest {
 		root1 = testUtils.createBinaryTree1();
 		root2 = testUtils.createBinaryTree2();
 		root3 = testUtils.createChildSumTree();
+		root4 = testUtils.createUnbalancedBinaryTree();
 		emptyTree = testUtils.createEmptyTree();
 		oneNodeTree = testUtils.createOneNodeTree();
 	}
@@ -103,5 +106,49 @@ public class TreeUtilServiceTest {
 		boolean result5 = treeUtilSevice.isChildSum(root3);
 		assertThat(result5).isEqualTo(true);
 	}
+	
+	@Test
+	public void isBalancedTest() {
+		int result1 = treeUtilSevice.isBalanced(root1);
+		assertThat(result1).isEqualTo(3);
+		
+		int result2 = treeUtilSevice.isBalanced(root2);
+		assertThat(result2).isEqualTo(4);
+		
+		int result3 = treeUtilSevice.isBalanced(emptyTree);
+		assertThat(result3).isEqualTo(0);
+		
+		int result4 = treeUtilSevice.isBalanced(oneNodeTree);
+		assertThat(result4).isEqualTo(1);
+		
+		int result5 = treeUtilSevice.isBalanced(root4);
+		assertThat(result5).isEqualTo(-1);	
+	}
+	
+	@Test
+	public void getMaxWidthTest() {
+		int result1 = treeUtilSevice.getMaxWidth(root1);
+		assertThat(result1).isEqualTo(2);
+		
+		int result2 = treeUtilSevice.getMaxWidth(root2);
+		assertThat(result2).isEqualTo(3);
+		
+		int result3 = treeUtilSevice.getMaxWidth(emptyTree);
+		assertThat(result3).isEqualTo(0);
+		
+		int result4 = treeUtilSevice.getMaxWidth(oneNodeTree);
+		assertThat(result4).isEqualTo(1);
+	}
 
+	@Test
+	public void constructTreeTest() {
+		int[] inOrder = { 40, 20, 60, 50, 70, 10, 80, 100, 30 };
+		int[] preOrder = { 10, 20, 40, 50, 60, 70, 30, 80, 100 };
+		BTNode root = treeUtilSevice.constructTree(preOrder, inOrder, 0, inOrder.length - 1);
+		assertThat(root).isNotNull();
+		assertThat(root.getKey()).isEqualTo(10);
+		assertThat(root.getLeft().getKey()).isEqualTo(20);
+		assertThat(root.getRight().getKey()).isEqualTo(30);
+	}
+	
 }

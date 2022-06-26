@@ -56,5 +56,20 @@ public class TestUtils {
 		root.setRight(right1);
 		return root;
 	}
+	
+	public BTNode createUnbalancedBinaryTree() {
+		BTNode root = new BTNode(10);
+		BTNode left1 = new BTNode(20);
+		BTNode right1 = new BTNode(30);
+		BTNode left2 = new BTNode(40);
+		BTNode right2 = new BTNode(50);
+		BTNode left3 = new BTNode(60);
+		left2.setLeft(left3);
+		right1.setLeft(left2);
+		right1.setRight(right2);
+		root.setLeft(left1);
+		root.setRight(right1);
+		return root;
+	}
 
 }
