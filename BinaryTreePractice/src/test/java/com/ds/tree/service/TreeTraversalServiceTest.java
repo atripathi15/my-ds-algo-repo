@@ -137,9 +137,35 @@ public class TreeTraversalServiceTest {
 		String result2 = treeTraversalSevice.printLeftViewIterative(root2);
 		assertThat(result2).isNotNull();
 		System.out.println("leftview:"+result2);
-		assertThat(result2.trim()).isEqualTo("10 20 40 70");
+		assertThat(result2.trim()).isEqualTo("10 20 40 70");		
+	}
 	
+	@Test
+	public void spiralTreeTraversalNaiveTest() {
+		String result1 = treeTraversalSevice.spiralTreeTraversalNaive(root1);
+		assertThat(result1).isNotNull();
+		//System.out.println("spiral view : "+result1);
+		assertThat(result1.trim()).isEqualTo("10 30 20 40 50");
 		
+		treeTraversalSevice.resetTraverstalString();
+		String result2 = treeTraversalSevice.spiralTreeTraversalNaive(root2);
+		assertThat(result2).isNotNull();
+		//System.out.println("spiral view : "+result2);
+		assertThat(result2.trim()).isEqualTo("10 30 20 40 50 60 80 70");
+	}
+	
+	@Test
+	public void spiralTreeTraversalTest() {
+		String result1 = treeTraversalSevice.spiralTreeTraversal(root1);
+		assertThat(result1).isNotNull();
+		//System.out.println("spiral view : "+result1);
+		assertThat(result1.trim()).isEqualTo("10 30 20 40 50");
+		
+		treeTraversalSevice.resetTraverstalString();
+		String result2 = treeTraversalSevice.spiralTreeTraversal(root2);
+		assertThat(result2).isNotNull();
+		//System.out.println("spiral view : "+result2);
+		assertThat(result2.trim()).isEqualTo("10 30 20 40 50 60 80 70");
 	}
 
 }
