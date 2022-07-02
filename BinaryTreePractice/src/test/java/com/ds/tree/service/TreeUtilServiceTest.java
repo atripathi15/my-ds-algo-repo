@@ -2,6 +2,9 @@ package com.ds.tree.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +32,8 @@ public class TreeUtilServiceTest {
 	
 	private BTNode root4;
 	
+	private BTNode root5;
+	
 	private BTNode emptyTree;
 	
 	private BTNode oneNodeTree;
@@ -43,6 +48,7 @@ public class TreeUtilServiceTest {
 		root2 = testUtils.createBinaryTree2();
 		root3 = testUtils.createChildSumTree();
 		root4 = testUtils.createUnbalancedBinaryTree();
+		root5 = testUtils.createCompleteBinaryTree();
 		emptyTree = testUtils.createEmptyTree();
 		oneNodeTree = testUtils.createOneNodeTree();
 	}
@@ -149,6 +155,33 @@ public class TreeUtilServiceTest {
 		assertThat(root.getKey()).isEqualTo(10);
 		assertThat(root.getLeft().getKey()).isEqualTo(20);
 		assertThat(root.getRight().getKey()).isEqualTo(30);
+	}
+	
+	@Test
+	public void serializeTreeTest() {
+		List<Integer> serializedTreeList = new ArrayList<>();
+		treeUtilSevice.serializeTree(root1, serializedTreeList);
+		System.out.println(serializedTreeList);          
+		assertThat(serializedTreeList.size()).isEqualTo(11);
+		
+		BTNode rootTree1 = treeUtilSevice.deSerializeTree(serializedTreeList);
+		assertThat(rootTree1).isNotNull();
+		assertThat(rootTree1.getKey()).isEqualTo(10);
+		
+		serializedTreeList.clear();
+		treeUtilSevice.serializeTree(root2, serializedTreeList);
+		System.out.println(serializedTreeList);
+		assertThat(serializedTreeList.size()).isEqualTo(17);
+	}
+	
+	@Test
+	public void countNodeTest() {
+		int treeCount1 = treeUtilSevice.countNode(root1);
+		assertThat(treeCount1).isEqualTo(5);
+		
+		int treeCount2 = treeUtilSevice.countNode(root5);
+		assertThat(treeCount2).isEqualTo(9);
+		
 	}
 	
 }

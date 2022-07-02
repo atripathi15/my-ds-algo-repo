@@ -1,6 +1,8 @@
 package com.ds.tree.service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,11 @@ public class TreeUtilService {
 	@Autowired
 	private TreeHeightSevice treeHeightService;
 	
-	private int preIndex = 0;
+	private int preIndex = 0;	
+	
+	private Integer EMPTY = -1;
+	
+	private int index = 0;
 	
 	/**
 	 * Total no of nodes in the tree
@@ -134,6 +140,62 @@ public class TreeUtilService {
 		root.setLeft(constructTree(preOrderArr, inOrderArr, start, index-1));
 		root.setRight(constructTree(preOrderArr, inOrderArr, index+1, end));
 		return root;		
+	}
+	
+	
+	/**
+	 * Runtime Complexity O(n) : Space Complexity O(h)
+	 * return preorder traversal of tree with -1 for null leaf nodes
+	*/
+	public void serializeTree(BTNode root, List<Integer> serializedTreeList){
+		if(root == null) {
+			serializedTreeList.add(EMPTY);
+			return;
+		}
+		serializedTreeList.add(root.getKey());
+		serializeTree(root.getLeft(), serializedTreeList);
+		serializeTree(root.getRight(), serializedTreeList);
+	}
+	
+	/**
+	 * Runtime Complexity O(n) : Space Complexity O(h)
+	*/
+	public BTNode deSerializeTree(List<Integer> serializedTreeList) {
+		if (index == serializedTreeList.size())
+			return null;		
+		int key = serializedTreeList.get(index);
+		index++;
+		if(key == EMPTY) {
+			return null;
+		}
+		BTNode root = new BTNode(key);
+		root.setLeft(deSerializeTree(serializedTreeList));
+		root.setRight(deSerializeTree(serializedTreeList));
+		return root;
+	}
+	
+	/**
+	 * count no of nodes in a complete binary tree. getSize() can be used
+	 * but its complexity is O(n)
+	 * Runtime Complexity O(logn * logn) 
+	*/
+	public int countNode(BTNode root) {
+		if (root == null)return 0;
+		int lh = 0;
+		int rh = 0;
+		BTNode current = root;
+		while (current != null) {
+			lh++;
+			current = current.getLeft();			
+		}
+		current = root;
+		while (current != null) {
+			rh++;
+			current = current.getRight();			
+		}
+		if (lh == rh)
+			return (int) (Math.pow(2, lh) - 1);
+		return 1 + countNode(root.getLeft()) + countNode(root.getRight());
 	}
 	
 
