@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ashish.bst.model.BSTNode;
-import com.ashish.bst.service.BSTOperationService;
 import com.ashish.bst.util.TestUtils;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,13 +21,7 @@ public class BSTOperationServiceTest {
 
 	TestUtils testUtils;
 
-	private BSTNode root1;
-
-	private BSTNode root2;
-
-	private BSTNode emptyTree;
-
-	private BSTNode oneNodeTree;
+	private BSTNode root1;		
 
 	@InjectMocks
 	private BSTOperationService bstOperationService;
@@ -37,7 +30,6 @@ public class BSTOperationServiceTest {
 	public void setUp() {
 		testUtils = new TestUtils();
 		root1 = testUtils.createBSTree1();
-
 	}
 
 	@BeforeEach
@@ -77,7 +69,7 @@ public class BSTOperationServiceTest {
 	
 	@Test
 	public void insertBSTRecursiveTest() {
-		BSTNode root = bstOperationService.insertRecursive(root1, 45);
+		BSTNode root = bstOperationService.insertRecursive(testUtils.createBSTree1(), 45);
 		assertThat(root).isNotNull();
 		assertThat(root.getRight().getRight().getLeft().getKey()).isEqualTo(45);
 		
@@ -85,14 +77,14 @@ public class BSTOperationServiceTest {
 		assertThat(root).isNotNull();
 		assertThat(root.getKey()).isEqualTo(45);
 		
-		root = bstOperationService.insertRecursive(root1, 28);
+		root = bstOperationService.insertRecursive(testUtils.createBSTree1(), 28);
 		assertThat(root).isNotNull();
 		assertThat(root.getLeft().getRight().getRight().getKey()).isEqualTo(28);
 	}
 	
 	@Test
 	public void insertBSTIterativeTest() {
-		BSTNode root = bstOperationService.insertIterative(root1, 45);
+		BSTNode root = bstOperationService.insertIterative(testUtils.createBSTree1(), 45);
 		assertThat(root).isNotNull();
 		assertThat(root.getRight().getRight().getLeft().getKey()).isEqualTo(45);
 		
@@ -100,9 +92,61 @@ public class BSTOperationServiceTest {
 		assertThat(root).isNotNull();
 		assertThat(root.getKey()).isEqualTo(45);
 		
-		root = bstOperationService.insertIterative(root1, 28);
+		root = bstOperationService.insertIterative(testUtils.createBSTree1(), 28);
 		assertThat(root).isNotNull();
 		assertThat(root.getLeft().getRight().getRight().getKey()).isEqualTo(28);
+	}
+	
+	@Test
+	public void deleteBSTTest() {
+		//Node to be deleted is a leaf node i.e. has no child. Can be simply removed
+		BSTNode result1 = bstOperationService.delete(testUtils.createBSTree1(), 25);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getLeft().getRight()).isNull();
+		
+		//Node to be deleted has one child. Replace the node with child
+		BSTNode result2 = bstOperationService.delete(testUtils.createBSTree1(), 35);
+		assertThat(result2).isNotNull();
+		assertThat(result2.getRight().getLeft().getKey()).isEqualTo(38);
+		
+		//Node to be deleted has both child. In this case find inorder successor and replace with that node
+		BSTNode result3 = bstOperationService.delete(testUtils.createBSTree1(), 40); 
+		assertThat(result3).isNotNull();
+		assertThat(result3.getRight().getKey()).isEqualTo(50);
+		
+		//NOde to be deleted does not exists
+		BSTNode result4 = bstOperationService.delete(testUtils.createBSTree1(), 45);
+		assertThat(result4).isNotNull();
+	}
+	
+	@Test
+	public void getFloorTest() {
+		BSTNode result1 = bstOperationService.getFloor(root1, 18);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getKey()).isEqualTo(10);
+		
+		result1 = bstOperationService.getFloor(root1, 39);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getKey()).isEqualTo(38);
+		
+		result1 = bstOperationService.getFloor(root1, 40);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getKey()).isEqualTo(40);
+	}
+	
+	@Test
+	public void getCeilTest() {
+		BSTNode result1 = bstOperationService.getCeil(root1, 18);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getKey()).isEqualTo(20);
+		
+		result1 = bstOperationService.getCeil(root1, 39);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getKey()).isEqualTo(40);
+		
+		result1 = bstOperationService.getCeil(root1, 25);
+		assertThat(result1).isNotNull();
+		assertThat(result1.getKey()).isEqualTo(25);
 	}
 
 
