@@ -2,6 +2,10 @@ package com.ashish.bst.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +25,9 @@ public class BSTOperationServiceTest {
 
 	TestUtils testUtils;
 
-	private BSTNode root1;		
+	private BSTNode root1;
+	
+	private BSTNode root2;
 
 	@InjectMocks
 	private BSTOperationService bstOperationService;
@@ -30,6 +36,7 @@ public class BSTOperationServiceTest {
 	public void setUp() {
 		testUtils = new TestUtils();
 		root1 = testUtils.createBSTree1();
+		root2 = testUtils.createBSTree2();
 	}
 
 	@BeforeEach
@@ -147,6 +154,58 @@ public class BSTOperationServiceTest {
 		result1 = bstOperationService.getCeil(root1, 25);
 		assertThat(result1).isNotNull();
 		assertThat(result1.getKey()).isEqualTo(25);
+	}
+	
+	@Test
+	public void verticalSumTest() {
+		Map<Integer, Integer> map = new TreeMap<>();
+		bstOperationService.verticalSumR(root1, 0, map);
+		//System.out.println("vertical sum :" + map);
+		for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+			System.out.print(e.getValue() + " ");
+		}
+		System.out.println();
+		assertThat(map).isNotEmpty();
+		assertThat(map.get(0)).isEqualTo(90);		
+	}
+	
+	@Test
+	public void verticalTraversalTest() {
+		Map<Integer, List<Integer>> map = new TreeMap<>();
+		bstOperationService.verticalTraversal(root1, map);
+		//System.out.println("vertical Traversal :" + map);
+		for (Map.Entry<Integer, List<Integer>> e : map.entrySet()) {
+			System.out.print(e.getValue() + " ");
+		}
+		System.out.println();
+		assertThat(map).isNotEmpty();
+		assertThat(map.size()).isEqualTo(5);		
+	}
+	
+	@Test
+	public void getTopViewTest() {
+		Map<Integer, List<Integer>> map = new TreeMap<>();
+		bstOperationService.getTopView(root1, map);
+		System.out.println("Top View :" + map);
+		for (Map.Entry<Integer, List<Integer>> e : map.entrySet()) {
+			System.out.print(e.getValue() + " ");
+		}
+		System.out.println();
+		assertThat(map).isNotEmpty();
+		assertThat(map.size()).isEqualTo(5);		
+	}
+	
+	@Test
+	public void getTopBottomTest() {
+		Map<Integer, List<Integer>> map = new TreeMap<>();
+		bstOperationService.getBottomView(root1, map);
+		System.out.println("Bottom View :" + map);
+		for (Map.Entry<Integer, List<Integer>> e : map.entrySet()) {
+			System.out.print(e.getValue() + " ");
+		}
+		System.out.println();
+		assertThat(map).isNotEmpty();
+		assertThat(map.size()).isEqualTo(5);		
 	}
 
 
