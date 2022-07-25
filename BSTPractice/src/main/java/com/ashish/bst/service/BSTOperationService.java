@@ -5,15 +5,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.springframework.stereotype.Service;
 
+import com.ashish.bst.model.AugmentedBSTNode;
 import com.ashish.bst.model.BSTNode;
 import com.ashish.bst.model.Pair;
 
 @Service
 public class BSTOperationService {
+	
+	private int count = 0;
 
 	/**
 	 * Runtime Complexity O(h) : Space Complexity O(h)
@@ -261,6 +264,59 @@ public class BSTOperationService {
 				q.add(new Pair(curr.getRight(), hd + 1));
 			}
 		}
+	}
+	
+	/**
+	 * Given an array, print left ceil of every element
+	 * Time Complexity : O(nlogn) : Space Complexity : O(1)
+	 */
+	public String printCeilLeft(int[] arr, int n) {
+		StringBuilder result = new StringBuilder();
+		result.append("-1");
+		TreeSet<Integer> set = new TreeSet<>();
+		set.add(arr[0]);
+		for(int i=1;i<n;i++) {
+			if(set.ceiling(arr[i])!=null) {
+				result.append(" "+set.ceiling(arr[i]));
+			} else {
+				result.append(" -1");
+			}
+			set.add(arr[i]);
+		}
+		return result.toString();
+	}
+	
+	
+	/**
+	 * Given an BST, find kth smallest node. Based on inorder traversal
+	 * Time Complexity : O(h+k) : Space Complexity : O(h)
+	 */
+	public int getKthSmallest(BSTNode root, int k) {
+		if (root != null) {
+			getKthSmallest(root.getLeft(), k);
+			count++;
+			if (count == k) {
+				return root.getKey();
+			}
+
+			return getKthSmallest(root.getRight(), k);
+		}
+		return -1;
+	}
+	
+	/**
+	 * Given an augmented BST, find kth smallest node. Based on lCount.
+	 * Time Complexity : O(h) : Space Complexity : O(h)
+	 */
+	public int getKthSmallestAug(AugmentedBSTNode root, int k) {
+		if (root.getLCount() + 1 == k)
+			return root.getKey();
+		if (root.getLCount() > k) {
+			getKthSmallestAug(root.getLeft(), k);
+		} else if (root.getLCount() < k) {
+			getKthSmallestAug(root.getLeft(), root.getLCount() - k + 1);
+		}
+		return -1;
 	}
 
 }

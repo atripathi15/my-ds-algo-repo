@@ -207,6 +207,19 @@ public class BSTOperationServiceTest {
 		assertThat(map).isNotEmpty();
 		assertThat(map.size()).isEqualTo(5);		
 	}
+	
+	@Test
+	public void printCeilLeftTest() {
+		int[] arr = {2,8,30,15,25,12};
+		String result = bstOperationService.printCeilLeft(arr, 6);
+		//System.out.println("Left Ceil :" + result);
+		assertThat(result).isEqualTo("-1 -1 -1 30 30 15");
+		
+		int[] arr2 = {6,18,4,5};
+		String result1 = bstOperationService.printCeilLeft(arr2, 4);
+		System.out.println("Left Ceil :" + result1);
+		assertThat(result1).isEqualTo("-1 -1 6 6");
+	}
 
 
 }
