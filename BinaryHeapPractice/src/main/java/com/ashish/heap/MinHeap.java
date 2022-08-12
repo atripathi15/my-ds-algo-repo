@@ -33,7 +33,7 @@ public class MinHeap {
 	}
 	
 	/**
-	 *  Time Complexity : O(n) , Space Complexity : O(1)
+	 *  Time Complexity : O(logn) , Space Complexity : O(1)
 	*/
 	public void insert(int x) {
 		if (size == capacity)
