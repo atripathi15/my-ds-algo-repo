@@ -1,6 +1,8 @@
 package com.ashish.heap;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import org.springframework.stereotype.Component;
@@ -164,6 +166,85 @@ public class HeapUtils {
 		int temp = arr[from];
 		arr[from] = arr[to];
 		arr[to] = temp;
+	}
+	
+	class Triplet implements Comparable<Triplet>{
+		int value;
+		int arrayPos;
+		int valuePos;
+		
+		Triplet(int value, int arrayPos, int valuePos) {
+			this.value = value;
+			this.arrayPos = arrayPos;
+			this.valuePos = valuePos;
+		}
+
+		@Override
+		public int compareTo(Triplet o) {
+			if(value <= o.value) return -1;
+			else return 1;
+		}		
+	}
+	
+	/**
+	 * Given k sorted arrays, merge them into a single sorted array
+	 * Time Complexity : O(nklogk)
+	 */
+	public List<Integer> mergeKSortedArrays(List<List<Integer>> arr) {
+		List<Integer> result = new ArrayList<>();
+		PriorityQueue<Triplet> pq = new PriorityQueue<>();
+		int arrIndex = 0;
+		for (List<Integer> i : arr) {
+			pq.add(new Triplet(i.get(0), arrIndex, 0));
+			arrIndex++;
+		}
+		while (!pq.isEmpty()) {
+			Triplet curr = pq.poll();
+			int arrayPos = curr.arrayPos;
+			int valuePos = curr.valuePos;
+			result.add(curr.value);
+			if (valuePos + 1 < arr.get(arrayPos).size()) {
+				pq.add(new Triplet(arr.get(arrayPos).get(valuePos + 1), arrayPos, valuePos + 1));
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Find median of a given array (middle element of sorted array if the array is odd, avg sum of middle two elements when array size is even)
+	 * Input : {2,22,14,15,20}
+	 * Output: {2,12,14,14.5,15}
+	 * Time Complexity : O(nlogn)
+	 */
+	public List<Double> getArrayMedian(int[] arr) {
+		List<Double> medianList = new ArrayList<>();
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+		maxHeap.add(arr[0]);
+		medianList.add((double) arr[0]);
+		for (int i = 1; i < arr.length; i++) {
+			int x = arr[i];
+			if (maxHeap.size() > minHeap.size()) {
+				if (maxHeap.peek() > x) {
+					minHeap.add(maxHeap.poll());
+					maxHeap.add(x);
+				} else {
+					minHeap.add(x);					
+				}
+				medianList.add((double)(minHeap.peek() + maxHeap.peek()) / 2);
+
+			} else {
+				if (maxHeap.peek() >= x) {					
+					maxHeap.add(x);
+				} else {
+					minHeap.add(x);
+					maxHeap.add(minHeap.poll());
+				}
+				medianList.add((double) maxHeap.peek());
+
+			}
+		}
+		return medianList;
 	}
 
 }

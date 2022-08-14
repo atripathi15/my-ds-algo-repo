@@ -1,8 +1,12 @@
 package com.ashish.heap;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -84,6 +88,32 @@ public class HeapUtilsTest {
 		System.out.println("closest 4 elements array");
 		Arrays.stream(result).forEach(i->System.out.print(i+" "));
 		//assertArrayEquals(result, expectedResult);		
+	}
+	
+	@Test
+	public void mergeKSortedArraysTest() {
+		List<Integer> list1 = Arrays.asList(12,18,24,29,35);
+		List<Integer> list2 = Arrays.asList(2,8,19,29);
+		List<Integer> list3 = Arrays.asList(5,30,36,42);
+		List<List<Integer>> inputList = new ArrayList<>();
+		inputList.add(list1);
+		inputList.add(list2);
+		inputList.add(list3);
+		List<Integer> result = heapUtils.mergeKSortedArrays(inputList);
+		assertNotNull(result);
+		assertEquals(list1.size()+list2.size()+list3.size(), result.size());
+		assertEquals(42,result.get(result.size()-1));
+		assertEquals(2,result.get(0));
+		System.out.println("merged list: "+result.toString());		
+	}
+	
+	@Test
+	public void getArrayMedianTest() {
+		int[] arr = {10,25,12,28,20};
+		List<Double> median = heapUtils.getArrayMedian(arr);
+		System.out.println("Median:");
+		median.stream().forEach(d->System.out.print(d+" "));
+		
 	}
 
 }
