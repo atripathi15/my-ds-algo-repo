@@ -2,6 +2,7 @@ package com.ashish.greedy.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -11,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.ashish.greedy.model.Activity;
 import com.ashish.greedy.model.Item;
+import com.ashish.greedy.model.Job;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(Lifecycle.PER_CLASS)
@@ -35,6 +37,20 @@ public class GreedySolutionServiceTest {
 		Item[] item = { new Item(50, 600), new Item(20, 500), new Item(30, 400)};
 		double result = greedySolutionService.fractionalKnapSack(item, 70);
 		assertEquals(1140.0, result);
+	}
+	
+	@Test
+	public void jobSequencingTest() {
+		Job[] jobs = { new Job('a',2, 100), new Job('b',1, 19), new Job('c',2, 27),new Job('d',1, 25),new Job('e',3, 15)};
+		int totalProfit = greedySolutionService.jobSequencing(jobs, 3);
+		assertEquals(152, totalProfit);
+	}
+	
+	@Test
+	public void getHuffManCodeTest() {
+		char[] chArr = {'a','d','e','f'};
+		int[] freqArr = {30,40,80,60};
+		greedySolutionService.getHuffmanCode(chArr, freqArr);
 	}
 
 }
