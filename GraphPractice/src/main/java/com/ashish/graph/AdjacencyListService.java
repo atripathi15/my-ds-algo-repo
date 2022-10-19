@@ -27,5 +27,15 @@ public class AdjacencyListService {
 			System.out.println();
 		}
 	}
+	
+	public int[] getGraphIndegree(List<ArrayList<Integer>> adj, int V) {
+		int[] inDegree = new int[V+1];
+		for (int i = 0; i < V + 1; i++) {
+			for (Integer u : adj.get(i)) {
+				inDegree[u] += 1;
+			}
+		}
+		return inDegree;		
+	}
 
 }

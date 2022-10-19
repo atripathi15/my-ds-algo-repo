@@ -33,7 +33,7 @@ public class GraphTraversalService {
 		return bfsString.toString();
 	}
 	
-	/** this method is used by disconnected graphs */
+	/** this method is used by disconnected graphs **/
 	public String BFS(List<ArrayList<Integer>> adj, int s, boolean[] visited) {
 		StringBuilder bfsString = new StringBuilder();
 		LinkedList<Integer> queue = new LinkedList<>();
