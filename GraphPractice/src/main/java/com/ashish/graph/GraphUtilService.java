@@ -63,7 +63,7 @@ public class GraphUtilService {
 		
 	}
 	
-	/** Method to find cycle in directed graph using DFS approach **/
+	/** Method to find cycle in directed graph using DFS approach using recursion call stack**/
 	public boolean DFSRecDirected(List<ArrayList<Integer>> adj, int s, boolean[] visited, boolean[] recStack) {
 		visited[s] = true;
 		recStack[s] = true;
